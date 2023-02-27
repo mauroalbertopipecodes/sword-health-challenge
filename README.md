@@ -26,3 +26,21 @@ https://dev.to/csituma/install-nvm-on-mac-windows-and-linux-1aj9
 ````
 
 
+
+`````
+npm install -g sequelize-cli
+Update the database credentials in config/config.json
+
+Creating a migration
+npx sequelize-cli migration:create --name modify_users_add_new_fields
+
+Add the columns in the created migration file:
+https://dev.to/nedsoft/add-new-fields-to-existing-sequelize-migration-3527
+queryInterface.addColumn
+
+Migrate
+npx sequelize-cli db:migrate
+`````
+
+
+

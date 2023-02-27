@@ -12,10 +12,11 @@ exports.testGet = [
           users
         });
     } catch (error) {
-      console.error('Error querying database:', error);
+      console.error('Error getting users:', error);
       return res.status(INTERNAL_SERVER_ERROR)
         .json({
-          message: 'Error querying database'
+          message: 'Error getting user',
+          errors: error?.errors
         });
     }
   }
@@ -26,18 +27,19 @@ exports.testPost = [
   async (req, res, next) => {
     try {
       // Saving an user
-      const { firstName, lastName } = req.body;
-      const newUser = await User.create({ firstName, lastName });
+      const { firstName, lastName, age } = req.body;
+      const newUser = await User.create({ firstName, lastName, age });
 
       return res.status(OK)
         .json({
           newUser
         });
     } catch (error) {
-      console.error('Error querying database:', error);
+      console.error('Error inserting user:', error);
       return res.status(INTERNAL_SERVER_ERROR)
         .json({
-          message: 'Error querying database'
+          message: 'Error inserting user',
+          errors: error?.errors
         });
     }
   }
