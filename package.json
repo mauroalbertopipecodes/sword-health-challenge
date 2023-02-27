@@ -1,0 +1,51 @@
+{
+  "name": "pipecodes_nodejs_boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "lint": "./node_modules/.bin/eslint **/*.js",
+    "test": "cross-env NODE_ENV=test ./node_modules/.bin/mocha --exit"
+  },
+  "author": "PipeCodes",
+  "license": "ISC",
+  "dependencies": {
+    "@octokit/rest": "^18.10.0",
+    "@sendgrid/mail": "^7.4.4",
+    "axios": "^0.27.2",
+    "babel-eslint": "^10.1.0",
+    "bcrypt": "^5.0.1",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.30.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "http-status": "^1.5.0",
+    "jsforce": "^1.10.1",
+    "jsonwebtoken": "^9.0.0",
+    "moment": "^2.29.1",
+    "mongoose": "^6.2.1",
+    "mysql2": "^3.1.2",
+    "netlify": "^8.0.0",
+    "node-cron": "^3.0.0",
+    "nodemailer": "^6.7.2",
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "pug": "^3.0.2",
+    "sequelize": "^6.28.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
