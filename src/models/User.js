@@ -2,36 +2,31 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../database/database');
 
 const User = sequelize.define('User', {
+  id: {
+    type: DataTypes.STRING,
+    primaryKey: true,
+    allowNull: false,
+  },
   email: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   firstName: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   lastName: {
     type: DataTypes.STRING,
-    allowNull: false
-  },
-  age: {
-    type: DataTypes.INTEGER,
     allowNull: false,
-    validate: {
-      customValidator() {
-        if (this.age < 10) {
-          throw new Error("Age less than 10");
-        }
-      },
-      notNull: {
-        msg: 'Please enter the age'
-      }
-    }
-  }
+  },
+  role: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 });
 
 module.exports = User;
