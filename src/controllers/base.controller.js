@@ -69,7 +69,9 @@ exports.createTask = [
 
 exports.updateTask = [
   async (req, res, next) => {
-    const token = req.headers?.authorization.replace('Bearer ', '');
+    const token = req.headers.authorization
+      ? req.headers.authorization.replace('Bearer ', '')
+      : null;
     const result = parseJwt(token);
     const { id } = result;
     try {
@@ -78,8 +80,7 @@ exports.updateTask = [
 
       var values = { summary: summary };
       var condition = { where: { userId: id, id: taskId } };
-      options = { multi: true };
-      const updatedTask = await Task.update(values, condition, options);
+      const updatedTask = await Task.update(values, condition);
 
       return res.status(OK).json({
         updatedTask,

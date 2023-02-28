@@ -6,11 +6,6 @@ const authController = require('../controllers/auth.controller');
 
 /*** GENERAL ENDPOINTS */
 
-// Service checkpoint status
-router.get('/', function (req, res, next) {
-  res.status(200).json({ message: `Service running` });
-});
-
 /*** BASE CONTROLLER ENDPOINTS */
 
 /** TASKS */

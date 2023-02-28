@@ -66,9 +66,17 @@ exports.login = async (req, res) => {
  * @param {*} next
  */
 exports.authorizedManager = async (req, res, next) => {
-  const token = req.headers.authorization.replace('Bearer ', '');
-  const result = parseJwt(token);
-  if (!token || result.role !== MANAGER) {
+  const token = req.headers.authorization
+    ? req.headers.authorization.replace('Bearer ', '')
+    : null;
+  if (!!token) {
+    const result = parseJwt(token);
+    if (result.role !== MANAGER) {
+      return res.status(UNAUTHORIZED).json({
+        message: 'Unauthorized to access this page.',
+      });
+    }
+  } else {
     return res.status(UNAUTHORIZED).json({
       message: 'Unauthorized to access this page.',
     });
@@ -78,9 +86,17 @@ exports.authorizedManager = async (req, res, next) => {
 };
 
 exports.authorizedTechnician = async (req, res, next) => {
-  const token = req.headers.authorization.replace('Bearer ', '');
-  const result = parseJwt(token);
-  if (!token || result.role !== TECHNICIAN) {
+  const token = req.headers.authorization
+    ? req.headers.authorization.replace('Bearer ', '')
+    : null;
+  if (!!token) {
+    const result = parseJwt(token);
+    if (result.role !== TECHNICIAN) {
+      return res.status(UNAUTHORIZED).json({
+        message: 'Unauthorized to access this page.',
+      });
+    }
+  } else {
     return res.status(UNAUTHORIZED).json({
       message: 'Unauthorized to access this page.',
     });
@@ -105,10 +121,10 @@ exports.createUser = async (req, res) => {
     const passworHashed = bcrypt.hashSync(password, 10);
     const newUser = await User.create({
       id: uuidv4(),
-      firstName,
-      lastName,
-      age,
-      email,
+      firstName: firstName,
+      lastName: lastName,
+      age: age,
+      email: email,
       password: passworHashed,
       role: role,
     });
