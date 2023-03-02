@@ -3,6 +3,11 @@ const router = express.Router();
 
 const baseController = require('../controllers/base.controller');
 const authController = require('../controllers/auth.controller');
+const { parseJwt } = require('../utils/encryption');
+
+router.get('/', function (req, res, next) {
+  return res.status(200).json();
+});
 
 /*** GENERAL ENDPOINTS */
 
@@ -12,17 +17,18 @@ const authController = require('../controllers/auth.controller');
 router.get('/tasks', baseController.fetchAllTask);
 router.post(
   '/task/create',
-  authController.authorizedTechnician,
-  baseController.createTask,
+  authController.authorizedTechnician(parseJwt),
+  baseController.createTask(parseJwt),
 );
 router.put(
   '/task/update',
-  authController.authorizedTechnician,
-  baseController.updateTask,
+  authController.authorizedTechnician(parseJwt),
+  baseController.updateTask(parseJwt),
 );
 router.delete(
   '/task/delete',
-  authController.authorizedManager,
+
+  authController.authorizedManager(parseJwt),
   baseController.deleteTask,
 );
 

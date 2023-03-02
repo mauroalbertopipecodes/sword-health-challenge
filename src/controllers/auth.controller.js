@@ -1,6 +1,7 @@
 const {
   INTERNAL_SERVER_ERROR,
   UNAUTHORIZED,
+  BAD_REQUEST,
   NOT_FOUND,
   OK,
 } = require('http-status');
@@ -55,75 +56,60 @@ exports.login = async (req, res) => {
   });
 };
 
-/**
- * Checks if the "user" property is
- * set on the request, which will be
- * if a valid Bearer token was sent
- * in the request previously.
- *
- * @param {*} req
- * @param {*} res
- * @param {*} next
- */
-exports.authorizedManager = async (req, res, next) => {
-  const token = req.headers.authorization
-    ? req.headers.authorization.replace('Bearer ', '')
-    : null;
-  if (!!token) {
-    const result = parseJwt(token);
-    if (result.role !== MANAGER) {
+exports.authorizedManager = (parseJwt) => {
+  return (req, res, next) => {
+    const token = req.headers.authorization
+      ? req.headers.authorization.replace('Bearer ', '')
+      : null;
+    if (!!token) {
+      const result = parseJwt(token);
+      if (result.role !== MANAGER) {
+        return res.status(UNAUTHORIZED).json({
+          message: 'Unauthorized to access this page.',
+        });
+      }
+    } else {
       return res.status(UNAUTHORIZED).json({
         message: 'Unauthorized to access this page.',
       });
     }
-  } else {
-    return res.status(UNAUTHORIZED).json({
-      message: 'Unauthorized to access this page.',
-    });
-  }
 
-  next();
+    next();
+  };
 };
 
-exports.authorizedTechnician = async (req, res, next) => {
-  const token = req.headers.authorization
-    ? req.headers.authorization.replace('Bearer ', '')
-    : null;
-  if (!!token) {
-    const result = parseJwt(token);
-    if (result.role !== TECHNICIAN) {
+exports.authorizedTechnician = (parseJwt) => {
+  return (req, res, next) => {
+    const token = req.headers.authorization
+      ? req.headers.authorization.replace('Bearer ', '')
+      : null;
+    if (!!token) {
+      const result = parseJwt(token);
+      if (result.role !== TECHNICIAN) {
+        return res.status(UNAUTHORIZED).json({
+          message: 'Unauthorized to access this page.',
+        });
+      }
+    } else {
       return res.status(UNAUTHORIZED).json({
         message: 'Unauthorized to access this page.',
       });
     }
-  } else {
-    return res.status(UNAUTHORIZED).json({
-      message: 'Unauthorized to access this page.',
-    });
-  }
 
-  next();
+    next();
+  };
 };
-
-/**
- * Creates a new
- * user profile.
- *
- * @param {*} req
- * @param {*} res
- * @returns
- */
 
 exports.createUser = async (req, res) => {
   try {
     // Saving an user
-    const { firstName, lastName, age, email, password, role } = req.body;
+    const { firstName, lastName, email, password, role } = req.body;
     const passworHashed = bcrypt.hashSync(password, 10);
+
     const newUser = await User.create({
       id: uuidv4(),
       firstName: firstName,
       lastName: lastName,
-      age: age,
       email: email,
       password: passworHashed,
       role: role,

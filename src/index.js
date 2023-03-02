@@ -1,14 +1,14 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const fetch = require("node-fetch");
-const Bluebird = require("bluebird");
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const fetch = require('node-fetch');
+const Bluebird = require('bluebird');
 const jsonwebtoken = require('jsonwebtoken');
 const sequelize = require('./database/database');
 
-require("dotenv").config();
+require('dotenv').config();
 require('./services/crons');
-const apiRouter = require('./routes')
+const apiRouter = require('./routes');
 
 fetch.Promise = Bluebird;
 
@@ -42,20 +42,30 @@ app.use(bodyParser.json());
  * in the token.
  */
 app.use((req, res, next) => {
-  if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-    jsonwebtoken.verify(req.headers.authorization.split(' ')[1], process.env.JWT_SECRET, (err, decode) => {
-      if (err) req.user = undefined;
-      req.user = decode;
-      next();
-    });
+  if (
+    req.headers &&
+    req.headers.authorization &&
+    req.headers.authorization.split(' ')[0] === 'Bearer'
+  ) {
+    jsonwebtoken.verify(
+      req.headers.authorization.split(' ')[1],
+      process.env.JWT_SECRET,
+      (err, decode) => {
+        if (err) req.user = undefined;
+        req.user = decode;
+        next();
+      },
+    );
   } else {
     req.user = undefined;
     next();
   }
 });
 
-app.use('/', apiRouter)
+app.use('/', apiRouter);
 
 app.listen(port, function () {
   console.log(`Listening for app on port ${port}`);
 });
+
+module.exports = app;
