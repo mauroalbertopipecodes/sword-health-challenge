@@ -59,7 +59,6 @@ exports.createTask = (parseJwt) => {
         userId: id,
         id: uuidv4(),
       });
-      console.log('BUB-newTask', newTask);
 
       return res.status(OK).json({
         newTask,
