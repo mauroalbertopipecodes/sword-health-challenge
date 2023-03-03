@@ -1,17 +1,17 @@
 ### NodeJS Pipecodes Boilerplate
 
-
 # NodeJS + Express + Sequelize (ORM with MySQL)
 
 # Startup
 
-````
+```
 Use docker:
 Install docker: https://docs.docker.com/get-docker/
 Copy .env.example into a .env file and fill the variables
 Run
 docker build -t pipecodes_nodejs_boilerplate .
 docker-compose up --build --force-recreate
+docker-compose up -d
 
 To stop just press ctrl+c
 
@@ -23,11 +23,9 @@ https://dev.to/csituma/install-nvm-on-mac-windows-and-linux-1aj9
 2- npm install
 3- Copy .env.example into a .env file and fill the variables
 4- npm run dev OR npm start
-````
+```
 
-
-
-`````
+```
 npm install -g sequelize-cli
 Update the database credentials in config/config.json
 
@@ -40,7 +38,4 @@ queryInterface.addColumn
 
 Migrate
 npx sequelize-cli db:migrate
-`````
-
-
-
+```

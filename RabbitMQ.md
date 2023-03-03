@@ -47,3 +47,10 @@ consumeNotifications();
 # In this example, we're also connecting to a local instance of RabbitMQ, creating a channel, and asserting the existence of a queue called "notifications". We then consume messages from that queue, parse the notification data, and perform the notification logic (which you would need to implement yourself). Finally, we acknowledge the message so that RabbitMQ knows it has been successfully processed.
 
 # By using RabbitMQ in this way, you can decouple the notification logic from the application flow. The application simply publishes a notification to RabbitMQ, and the consumer picks up that notification and performs the necessary logic. This can make your application more resilient and easier to maintain, since you can modify the notification logic without having to change the application itself.
+
+O publisher envia mensagens para o RabbitMQ e então o Rabbit envia para o consumidor, que vai criar a lógica da notificação.
+No publisher, abrimos uma conexão e um canal, definimos que o tipo de mensagem é uma notificação.
+Definimos no canal, enviamos a notificação e fechamos tudo.
+O consumidor também declara conexão, canal e tipo de mensagem no canal.
+Depois faz parse da notificação.
+Faz um Ack para confirmar co que consumiu bem e fecha canais
